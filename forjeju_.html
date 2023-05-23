@@ -16,6 +16,7 @@
     .content {
       display: flex;
       justify-content: center;
+      align-items: flex-start;
     }
 
     nav {
@@ -42,6 +43,7 @@
     .sidebar {
       width: 200px;
       padding: 20px;
+      margin-right: 20px;
     }
 
     .sidebar h3 {
@@ -65,19 +67,29 @@
       color: #333;
     }
 
-    section {
-      margin-top: 40px;
-      margin-left: 20px;
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
+    .notice {
+      width: 200px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
-    section:first-child {
-      border-top: none; /* 첫 번째 섹션의 경계선 제거 */
+    .notice h3 {
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
     }
-
-    section h2 {
+    
+    .info {
+      width: 100%;
+      padding: 20px;
+      margin: 172px auto 0;
       text-align: center;
+    }
+
+    .info h3 {
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
     }
   </style>
 </head>
@@ -93,43 +105,31 @@
         <li><a href="java.html">Java</a></li>
         <li><a href="python.html">Python</a></li>
         <li><a href="cpp.html">C++</a></li>
+        <li><a href="solved.html">Solved</a></li>
       </ul>
     </nav>
 
     <div class="sidebar">
       <h3>이번 과제</h3>
       <ul>
-        <li>과제 1: C 코드 작성</li>
-        <li>과제 2: Java 프로그램 개발</li>
-        <li>과제 3: Python 스크립트 작성</li>
-        <li>과제 4: C++ 프로젝트 구현</li>
+        <li><a href="https://www.acmicpc.net/problem/1010">과제 1: 1010</a></li>
+        <li><a href="https://www.acmicpc.net/problem/1018">과제 2: 1018</a></li>
+        <li><a href="https://www.acmicpc.net/problem/1049">과제 3: 1049</a></li>
+        <li><a href="https://www.acmicpc.net/problem/1541">과제 4: 1541</a></li>
       </ul>
+    </div>
 
-      <h3>해결한 과제</h3>
-      <p>5월 30일: 과제 제출 마감일이 연장되었습니다.</p>
-      <p>6월 1일: 추가 과제 안내드립니다.</p>
+    <div class="notice">
+      <h3>공지사항</h3>
+      <p>매주 화요일 18시</p>
+      <p>문제는 되도록 다 풀어오기</p>
     </div>
   </div>
 
-  <section id="c-section">
-    <h2>C</h2>
-    <!-- C 섹션에 대한 내용을 작성하세요 -->
-  </section>
-
-  <section id="java-section">
-    <h2>Java</h2>
-    <!-- Java 섹션에 대한 내용을 작성하세요 -->
-  </section>
-
-  <section id="python-section">
-    <h2>Python</h2>
-    <!-- Python 섹션에 대한 내용을 작성하세요 -->
-  </section>
-
-  <section id="cpp-section">
-    <h2>C++</h2>
-    <!-- C++ 섹션에 대한 내용을 작성하세요 -->
-  </section>
+  <div class="info">
+    <h3></h3>
+    <p>제주도를 향한 컴퓨터 공학도들</p>
+  </div>
 
   <script>
     function goToMain() {
