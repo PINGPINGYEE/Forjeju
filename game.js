@@ -1,6 +1,14 @@
 // 게임 설정
-const gridSize = 10;
-const totalMines = 10;
+let gridSize = 10;
+let totalMines = 10;
+let currentGameMode = 'intermediate'; // 시작시 기본 모드 설정
+
+const easyModeButton = document.getElementById('easy-mode');
+const intermediateModeButton = document.getElementById('intermediate-mode');
+const hardModeButton = document.getElementById('hard-mode');
+const expertModeButton = document.getElementById('expert-mode');
+
+
 let gameBoardState = [];
 let userPosition = { x: 0, y: 0 };
 let startTime = null;
@@ -14,6 +22,50 @@ const darkModeButton = document.getElementById('dark-mode');
 const modeIndicator = document.querySelector('.mode-indicator');
 const button = document.getElementById('description-button');
 const content = document.getElementById('description-content');
+
+
+function setGameMode(mode) {
+  const title = document.querySelector('h2'); // 타이틀 요소를 찾습니다.
+  switch (mode) {
+    case 'easy':
+      gridSize = 10;
+      totalMines = 5;
+      title.textContent = "지뢰 찾기 (Easy Mode)"; // 타이틀을 업데이트합니다.
+      break;
+    case 'intermediate':
+      gridSize = 10;
+      totalMines = 10;
+      title.textContent = "지뢰 찾기 (Intermediate Mode)";
+      break;
+    case 'hard':
+      gridSize = 10;
+      totalMines = 15;
+      title.textContent = "지뢰 찾기 (Hard Mode)";
+      break;
+    case 'expert':
+      gridSize = 10;
+      totalMines = 20;
+      title.textContent = "지뢰 찾기 (Expert Mode)";
+      break;
+    default:
+      gridSize = 10;
+      totalMines = 10;
+      title.textContent = "지뢰 찾기";
+  }
+  reStartGame(); // 게임 모드가 변경되면 게임 재시작
+  updatePageTitle(); // 게임 모드 변경시 페이지 제목 업데이트
+}
+
+function updatePageTitle() {
+  const pageTitle = document.querySelector('h1');
+  pageTitle.textContent = `지뢰 찾기 (${currentGameMode} mode)`;
+}
+
+// 이벤트 리스너 등록
+easyModeButton.addEventListener('click', () => setGameMode('easy'));
+intermediateModeButton.addEventListener('click', () => setGameMode('intermediate'));
+hardModeButton.addEventListener('click', () => setGameMode('hard'));
+expertModeButton.addEventListener('click', () => setGameMode('expert'));
 
 button.addEventListener('click', function () {
   content.classList.toggle('show');
@@ -30,6 +82,7 @@ lightModeButton.addEventListener('click', () => {
 
 // 다크모드
 darkModeButton.addEventListener('click', () => {
+  content.style.color = '#333333'; // description-content 색상
   body.style.backgroundColor = '#000000'; // 배경
   body.style.color = '#FFFFFF'; // 글자
   gameBoard.style.borderColor = '#FFFFFF'; // 게임 보드 테두리 색상

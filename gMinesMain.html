@@ -85,21 +85,30 @@
   <header onclick="goToMain()">
     <h1>FOR JEJU</h1>
   </header>
-
+  
   <button id="description-button" class="toggle-button">게임 설명</button>
   <div id="description-content" class="toggle-content">
-    방향키로 조작합니다.<br>
+    방향키로 조작합니다.<br><br>
     처음 상태는 일반 모드입니다.<br>
-    일반 모드일 때는 지뢰를 밟으면 게임 오버됩니다.<br>
-    B를 누르게 되면 체크 모드로 들어가며 지뢰가 있는지 확인할 수 있습니다.<br>
-    체크 모드인 상태에서는 지뢰가 없는 곳을 밟으면 게임 오버됩니다.<br>
-    B를 다시 누르게 되면 일반 모드로 돌아갑니다.<br>
+    일반 모드일 때는 지뢰가 없는 곳만 밟아야 합니다.<br>
+    지뢰를 밟으면 게임 오버됩니다.<br><br>
+    B를 누르게 되면 체크 모드로 바뀝니다.<br>
+    체크 모드인 상태에서는 지뢰가 있는 곳만 밟아야 합니다.<br>
+    지뢰가 없는 곳을 밟으면 게임 오버됩니다.<br><br>
+    B를 다시 누르게 되면 일반 모드로 돌아갑니다.<br><br>
+    플레이 상황에 따라 라이트 모드와 다크 모드를 선택하면 됩니다.<br>
     아래에 모드 표시와 시간이 나와있으니 스크롤을 최대한 아래로 내려주세요.<br>
   </div>
 
   <button id="light-mode">Light Mode</button>
   <button id="dark-mode">Dark Mode</button>
-  <h1>지뢰 찾기</h1>
+  <div>
+    <button id="easy-mode">Easy Mode</button>
+    <button id="intermediate-mode">Intermediate Mode</button>
+    <button id="hard-mode">Hard Mode</button>
+    <button id="expert-mode">Expert Mode</button>
+  </div>
+  <h2>지뢰 찾기</h2>
   <button id="restart">Restart</button>
 
 
