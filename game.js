@@ -24,6 +24,23 @@ const button = document.getElementById('description-button');
 const content = document.getElementById('description-content');
 
 
+let messageVisible = true;
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'B' || event.key === 'b') {
+    messageVisible = !messageVisible;
+    showMessage();
+  }
+});
+
+
+function showMessage() {
+  const messageElement = document.querySelector('.message');
+  messageElement.textContent = messageVisible ? 'Game mode : Normal' : 'Game mode : Check';
+}
+
+
+
 function setGameMode(mode) {
   const title = document.querySelector('h2'); // 타이틀 요소를 찾습니다.
   switch (mode) {
@@ -39,12 +56,12 @@ function setGameMode(mode) {
       break;
     case 'hard':
       gridSize = 10;
-      totalMines = 15;
+      totalMines = 20;
       title.textContent = "지뢰 찾기 (Hard Mode)";
       break;
     case 'expert':
       gridSize = 10;
-      totalMines = 20;
+      totalMines = 35;
       title.textContent = "지뢰 찾기 (Expert Mode)";
       break;
     default:
@@ -52,6 +69,7 @@ function setGameMode(mode) {
       totalMines = 10;
       title.textContent = "지뢰 찾기";
   }
+  currentGameMode = mode; // 현재 게임 모드를 설정합니다.
   reStartGame(); // 게임 모드가 변경되면 게임 재시작
   updatePageTitle(); // 게임 모드 변경시 페이지 제목 업데이트
 }
@@ -100,6 +118,8 @@ function reStartGame() {
   document.addEventListener('keydown', userMovement);
   startTime = null; // 초기화를 위해 시간 설정
   startTimer(); // 새 게임이 시작될 때 타이머 시작
+  messageVisible = true; // 메시지 표시 설정
+  showMessage(); // 메시지 업데이트
   answerMode = false; // 정답 모드 비활성화
   modeIndicator.textContent = 'Mode: Normal'; // 모드 표시 업데이트
 }
@@ -111,23 +131,7 @@ function toggleAnswerMode() {
   gameMode.textContent = answerMode ? 'Mode: Answer' : 'Mode: Normal';
 }
 
-let messageVisible = true;
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'B' || event.key === 'b') {
-    messageVisible = !messageVisible;
-    showMessage();
-  }
-});
-
-
-function showMessage() {
-  const messageElement = document.querySelector('.message');
-  messageElement.textContent = messageVisible ? 'Game mode : Normal' : 'Game mode : Check';
-}
-
-// 초기화 시 메시지 표시
-showMessage();
 
 // 시간 측정 시작
 function startTimer() {
