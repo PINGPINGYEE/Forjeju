@@ -159,7 +159,7 @@ function createEmptyBoard() {
   for (let y = 0; y < gridSize; y++) {
     const row = [];
     for (let x = 0; x < gridSize; x++) {
-      row.push({ hasMine: false, revealed: false });
+      row.push({ revealed: false, hasMine: false, revealedInAnswerMode: false });
     }
     board.push(row);
   }
@@ -187,7 +187,7 @@ gameBoard.addEventListener('mousedown', (event) => {
 // 사용자 움직임 처리
 function userMovement(event) {
   if (answerMode && (event.key === 'B' || event.key === 'b')) {
-    // 정답 모드에서 스페이스바를 누르면 일반 모드로 변경
+    // 정답 모드에서 B를 누르면 일반 모드로 변경
     answerMode = false;
     modeIndicator.textContent = 'Mode: Normal'; // 모드 표시 업데이트
     renderGame();
@@ -219,6 +219,8 @@ function userMovement(event) {
     if (hasMine) {
       // 정답 모드에서 지뢰가 있는 곳에 도착하면 표시
       gameBoardState[newPosition.y][newPosition.x].revealed = true;
+      // 지뢰가 있는 셀을 공개한 경우 추가
+      gameBoardState[newPosition.y][newPosition.x].revealedInAnswerMode = true;
     } else {
       // 정답 모드에서 지뢰가 없는 곳에 도착하면 게임 오버
       gameOver();
@@ -233,8 +235,8 @@ function userMovement(event) {
 
 // 게임 진행 상태 확인
 function checkGameStatus() {
-  // 게임 종료 조건 확인
-  if (gameBoardState[userPosition.y][userPosition.x].hasMine && !answerMode) {
+  // 'answerMode'에서 공개되지 않은 셀에 지뢰가 있을 경우에만 게임 오버
+  if (gameBoardState[userPosition.y][userPosition.x].hasMine && !gameBoardState[userPosition.y][userPosition.x].revealedInAnswerMode && !answerMode) {
     gameOver();
   } else if (isAllCellsRevealed()) {
     gameWin();
@@ -245,6 +247,10 @@ function checkGameStatus() {
 function revealCell(x, y) {
   if (!gameBoardState[y][x].revealed) {
     gameBoardState[y][x].revealed = true;
+    // 지뢰가 있고 정답 모드에서 공개된 셀은 'revealedInAnswerMode'를 true로 설정합니다.
+    if (gameBoardState[y][x].hasMine && answerMode) {
+      gameBoardState[y][x].revealedInAnswerMode = true;
+    }
     checkGameStatus();
   }
   renderGame();
@@ -314,6 +320,7 @@ function renderGame() {
       if (revealed) {
         if (hasMine) {
           cell.textContent = 'X';
+          cell.style.backgroundColor = 'green';
           cell.classList.add('mine');
         } else {
           const count = countNearbyMines(x, y);
