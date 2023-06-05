@@ -82,6 +82,10 @@ function draw() {
     text('MADE BY', fb_x1, 200);
     textAlign(LEFT);
     text('5585833', fb_x2, 200);
+    textAlign(RIGHT);
+    text('BY', fb_x1, 400);
+    textAlign(LEFT);
+    text('ME', fb_x2, 400);
     if(fb_x1 <= 425)
     {
       fb_x1+=5;
