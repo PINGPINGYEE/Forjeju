@@ -4,16 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fire Animation with Time Display</title>
+    <title>Fire Animation with Time Display and Stopwatch</title>
     <style>
+        /* 기존의 Fire Animation CSS */
         #fireContainer {
             width: 100vw;
-            /* 뷰포트 너비의 100% */
             height: 100vh;
-            /* 뷰포트 높이의 100% */
             background-color: black;
             position: fixed;
-            /* 화면에 고정 */
             top: 0;
             left: 0;
             overflow: hidden;
@@ -22,23 +20,14 @@
         #timeDisplay {
             position: fixed;
             top: 25%;
-            /* 세로로 1/4 지점 */
             left: 50%;
-            /* 가로 중앙 */
             transform: translate(-50%, -50%);
-            /* 중앙 정렬 */
             font-size: 5em;
-            /* 글씨 크기 */
             z-index: 10;
-            /* 불꽃 애니메이션 위에 표시 */
-
             background: linear-gradient(white, #8A4B08);
-            /* 흰색에서 회색으로 변하는 그라데이션 */
             -webkit-background-clip: text;
             color: transparent;
-            /* 글씨 색상을 투명하게 하여 배경이 보이도록 함 */
         }
-
 
         @keyframes rise {
             0% {
@@ -51,6 +40,41 @@
                 opacity: 0;
             }
         }
+
+        /* 스톱워치 CSS */
+        .stopwatch-container {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .stopwatch {
+            font-size: 2em;
+            background: linear-gradient(orange, red);
+            /* 오렌지색 그라데이션 적용 */
+            -webkit-background-clip: text;
+            color: transparent;
+            /* 텍스트 색상 투명 처리 */
+        }
+
+        .stopwatch button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .stopwatch button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -58,7 +82,16 @@
     <div id="fireContainer"></div>
     <div id="timeDisplay"></div>
 
+    <!-- 스톱워치 HTML -->
+    <div class="stopwatch-container">
+        <div class="stopwatch" id="stopwatch">00:00:00</div>
+        <button id="startButton">시작</button>
+        <button id="stopButton">정지</button>
+        <button id="resetButton">리셋</button>
+    </div>
+
     <script>
+        /* 기존의 Fire Animation JavaScript */
         const fireContainer = document.getElementById('fireContainer');
         const timeDisplay = document.getElementById('timeDisplay');
 
@@ -90,6 +123,52 @@
 
         setInterval(createFireParticle, 30);
         setInterval(updateTime, 1000);
+
+        /* 스톱워치 JavaScript */
+        let startTime;
+        let updatedTime;
+        let difference;
+        let tInterval;
+        let running = false;
+
+        function startTimer() {
+            if (!running) {
+                startTime = new Date().getTime();
+                tInterval = setInterval(getShowTime, 1);
+                running = true;
+            }
+        }
+
+        function stopTimer() {
+            if (running) {
+                clearInterval(tInterval);
+                running = false;
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(tInterval);
+            running = false;
+            document.getElementById('stopwatch').innerHTML = '00:00:00';
+        }
+
+        function getShowTime() {
+            updatedTime = new Date().getTime();
+            difference = updatedTime - startTime;
+
+            let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+            document.getElementById('stopwatch').innerHTML = hours + ':' + minutes + ':' + seconds;
+        }
+
+        document.getElementById('startButton').addEventListener('click', startTimer);
+        document.getElementById('stopButton').addEventListener('click', stopTimer);
+        document.getElementById('resetButton').addEventListener('click', resetTimer);
     </script>
 </body>
 
